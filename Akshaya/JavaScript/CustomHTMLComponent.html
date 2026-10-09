@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Custom HTML Component</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+
+            border: none;
+            border-radius: 5px;
+
+            background-color: #2563eb;
+            color: white;
+
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        #output {
+            margin-top: 25px;
+        }
+
+        .card {
+            padding: 20px;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            border-left: 5px solid #2563eb;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>Custom HTML Component</h1>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
+
+        <input
+            type="text"
+            id="role"
+            placeholder="Enter your role"
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+        >
+
+        <button onclick="createUserCard()">
+            Create User Card
+        </button>
+
+        <div id="output"></div>
+
+    </div>
+
+
+    <script>
+
+        // Create a custom HTML element
+
+        class UserCard extends HTMLElement {
+
+            connectedCallback() {
+
+                const name = this.getAttribute("name");
+                const role = this.getAttribute("role");
+                const email = this.getAttribute("email");
+
+                this.innerHTML = `
+                    <div class="card">
+
+                        <h2>${name}</h2>
+
+                        <p>
+                            <strong>Role:</strong> ${role}
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong> ${email}
+                        </p>
+
+                    </div>
+                `;
+            }
+        }
+
+
+        // Register the custom element
+
+        customElements.define("user-card", UserCard);
+
+
+        // Create the component using user input
+
+        function createUserCard() {
+
+            const name = document.getElementById("name").value;
+            const role = document.getElementById("role").value;
+            const email = document.getElementById("email").value;
+
+            if (name === "" || role === "" || email === "") {
+
+                alert("Please fill all the fields.");
+
+                return;
+            }
+
+            const card = document.createElement("user-card");
+
+            card.setAttribute("name", name);
+            card.setAttribute("role", role);
+            card.setAttribute("email", email);
+
+            document.getElementById("output").innerHTML = "";
+
+            document.getElementById("output").appendChild(card);
+        }
+
+    </script>
+
+</body>
+
+</html>

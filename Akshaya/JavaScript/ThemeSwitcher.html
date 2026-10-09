@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Light Dark Theme Switcher</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #222;
+
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: 0.3s;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+
+            background-color: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+            width: 450px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        button {
+            padding: 12px 20px;
+
+            border: none;
+            border-radius: 6px;
+
+            background-color: #2563eb;
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+
+        /* Dark Mode */
+
+        body.dark {
+            background-color: #111827;
+            color: white;
+        }
+
+        body.dark .container {
+            background-color: #1f2937;
+        }
+
+        body.dark button {
+            background-color: #f59e0b;
+            color: black;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>Dynamic Theme Switcher</h1>
+
+        <p id="message">
+            Welcome! You are using Light Mode.
+        </p>
+
+        <button id="themeButton" onclick="toggleTheme()">
+            Switch to Dark Mode
+        </button>
+
+    </div>
+
+
+    <script>
+
+        function toggleTheme() {
+
+            const body = document.body;
+
+            const button = document.getElementById("themeButton");
+
+            const message = document.getElementById("message");
+
+
+            // Add or remove dark class
+
+            body.classList.toggle("dark");
+
+
+            // Check current theme
+
+            if (body.classList.contains("dark")) {
+
+                button.textContent = "Switch to Light Mode";
+
+                message.textContent =
+                    "Welcome! You are using Dark Mode.";
+
+            } 
+            else {
+
+                button.textContent = "Switch to Dark Mode";
+
+                message.textContent =
+                    "Welcome! You are using Light Mode.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
