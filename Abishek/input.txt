@@ -1,0 +1,4 @@
+Hello world
+Java is not fun
+
+I dont love coding
