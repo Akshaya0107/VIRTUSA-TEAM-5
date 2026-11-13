@@ -1,0 +1,208 @@
+{
+  "checkedAt": "2026-11-13T05:25:03.553Z",
+  "runner": "Newman (Postman collection)",
+  "stats": {
+    "iterations": {
+      "total": 1,
+      "pending": 0,
+      "failed": 0
+    },
+    "items": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    },
+    "scripts": {
+      "total": 30,
+      "pending": 0,
+      "failed": 0
+    },
+    "prerequests": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    },
+    "requests": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    },
+    "tests": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    },
+    "assertions": {
+      "total": 16,
+      "pending": 0,
+      "failed": 0
+    },
+    "testScripts": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    },
+    "prerequestScripts": {
+      "total": 15,
+      "pending": 0,
+      "failed": 0
+    }
+  },
+  "failureCount": 0,
+  "requests": [
+    {
+      "name": "Register",
+      "status": 201,
+      "assertions": [
+        {
+          "name": "HTTP 201",
+          "passed": true
+        },
+        {
+          "name": "No password exposed",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Update profile",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Create reminder",
+      "status": 201,
+      "assertions": [
+        {
+          "name": "HTTP 201",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "List reminders",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Get reminder",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Update reminder",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "All email history",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Reminder email history",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Cancel reminder",
+      "status": 200,
+      "assertions": [
+        {
+          "name": "HTTP 200",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Delete reminder",
+      "status": 204,
+      "assertions": [
+        {
+          "name": "HTTP 204",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Logout all sessions",
+      "status": 204,
+      "assertions": [
+        {
+          "name": "HTTP 204",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Revoked token rejected",
+      "status": 401,
+      "assertions": [
+        {
+          "name": "HTTP 401",
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

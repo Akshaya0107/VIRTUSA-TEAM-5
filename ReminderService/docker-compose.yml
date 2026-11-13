@@ -1,0 +1,67 @@
+name: smart-reminder
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: smartreminder
+      MYSQL_USER: reminder_app
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Run tools/init-env.ps1 first}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Run tools/init-env.ps1 first}
+      TZ: UTC
+    command: ["--default-time-zone=+00:00"]
+    ports: ["127.0.0.1:3307:3306"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/02-create-tables.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./docker/mysql-runtime.sql:/docker-entrypoint-initdb.d/02-runtime.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql -u reminder_app smartreminder -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 30s
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    stop_grace_period: 60s
+    environment:
+      DB_URL: jdbc:mysql://db:3306/smartreminder?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
+      DB_USERNAME: reminder_app
+      DB_PASSWORD: ${DB_PASSWORD:?Run tools/init-env.ps1 first}
+      JWT_SECRET: ${JWT_SECRET:?Run tools/init-env.ps1 first}
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_AUTH: ${SMTP_AUTH:-false}
+      SMTP_STARTTLS: ${SMTP_STARTTLS:-false}
+      MAIL_FROM: ${MAIL_FROM:-reminders@example.test}
+      MAX_RETRIES: ${MAX_RETRIES:-3}
+      RETRY_BASE_SECONDS: ${RETRY_BASE_SECONDS:-30}
+      RETRY_CAP_SECONDS: ${RETRY_CAP_SECONDS:-3600}
+      SCHEDULER_POLL_MS: ${SCHEDULER_POLL_MS:-10000}
+      SCHEDULER_LEASE_SECONDS: ${SCHEDULER_LEASE_SECONDS:-120}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8088,http://127.0.0.1:8088}
+    ports: ["127.0.0.1:${BACKEND_PORT:-18081}:8080"]
+    depends_on:
+      db: { condition: service_healthy }
+      mailpit: { condition: service_started }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health/database"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports: ["127.0.0.1:8088:80"]
+    depends_on:
+      backend: { condition: service_healthy }
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports: ["127.0.0.1:8025:8025", "127.0.0.1:1026:1025"]
+volumes:
+  mysql-data:

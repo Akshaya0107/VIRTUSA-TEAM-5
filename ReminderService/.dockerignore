@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+**/node_modules
+**/target
+**/dist
+**/.local-data
+**/*.log
+**/*.eml
+.local-secrets

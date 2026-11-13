@@ -1,0 +1,16 @@
+# Requires APP_DOMAIN pointing at this Linux server and ports 80/443 reachable.
+services:
+  edge:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443", "443:443/udp"]
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Set your real public hostname}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [frontend]
+volumes:
+  caddy-data:
+  caddy-config:
